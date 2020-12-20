@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.huawei.sampleappgallery">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,15 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SampleAppGallery">
-        <activity android:name="com.huawei.sampleappgallery.ui.LoginActivity">
+        <activity android:name=".ui.MainActivity"></activity>
+        <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.RegisterActivity"/>
+        <activity android:name=".ui.RegisterActivity" />
+        <activity android:name=".ui.RegisterStartActivity" />
     </application>
 
 </manifest>

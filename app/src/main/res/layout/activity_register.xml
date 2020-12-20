@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
+        app:layout_constraintGuide_percent="0.3" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edtMail"
@@ -53,6 +53,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/bg_edit_text"
         android:hint="Verify Code"
+        android:visibility="gone"
         android:inputType="number"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
@@ -69,7 +70,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="#3F51B5"
-        android:hint="LOGIN"
+        app:layout_goneMarginTop="16dp"
+        android:hint="REGISTER"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:textColor="@color/white"

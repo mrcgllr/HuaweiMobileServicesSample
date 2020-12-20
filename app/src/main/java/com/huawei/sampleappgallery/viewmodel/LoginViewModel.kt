@@ -1,35 +1,45 @@
 package com.huawei.sampleappgallery.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.huawei.agconnect.auth.AGConnectAuth
 import com.huawei.agconnect.auth.EmailAuthProvider
-import com.huawei.agconnect.auth.VerifyCodeSettings
-import java.util.*
+import com.huawei.sampleappgallery.util.Util
 
-class LoginViewModel:ViewModel(){
-
-    private var _isSendVerify = MutableLiveData<Boolean>()
-    val isSendVerify:LiveData<Boolean> get() = _isSendVerify
-
-    private var _toastMessage= MutableLiveData<String>()
-    val toastMessage:LiveData<String> get() = _toastMessage
+class LoginViewModel(
+    application: Application,
+    private val hmsAuth: AGConnectAuth,
+    private val gmsAuth: FirebaseAuth
+) : AndroidViewModel(application) {
 
 
-    fun hmsSendVerify(email: String) {
-        val settings = VerifyCodeSettings.newBuilder()
-            .action(VerifyCodeSettings.ACTION_REGISTER_LOGIN)
-            .sendInterval(30)
-            .locale(Locale.ENGLISH)
-            .build()
-        val request = EmailAuthProvider.requestVerifyCode(email,settings)
-        request.addOnSuccessListener {
-            _isSendVerify.value =true
-            _toastMessage.value = "Send verify code your e mail address"
+    private var _message = MutableLiveData<String>()
+    val message: LiveData<String> get() = _message
 
-        }.addOnFailureListener {
-            _isSendVerify.value = false
-            _toastMessage.value = it.localizedMessage
+    private var _isSuccessLogin = MutableLiveData<Boolean>()
+    val isSuccessLogin: LiveData<Boolean> get() = _isSuccessLogin
+
+    fun loginUsers(email: String, password: String) {
+        if (Util.isHmsAvailable(getApplication())) {
+            val credential = EmailAuthProvider.credentialWithPassword(email, password)
+            hmsAuth.signIn(credential).addOnSuccessListener {
+                _isSuccessLogin.value = true
+                _message.value = "Login is successful"
+            }.addOnFailureListener { exception ->
+                _isSuccessLogin.value = false
+                _message.value = exception.localizedMessage
+            }
+        } else if (Util.isGmsAvailable(getApplication())) {
+            gmsAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
+                _isSuccessLogin.value = true
+                _message.value = "Login is successful"
+            }.addOnFailureListener { exception ->
+                _isSuccessLogin.value = false
+                _message.value = exception.localizedMessage
+            }
         }
     }
 }

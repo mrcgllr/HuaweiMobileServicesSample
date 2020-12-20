@@ -1,6 +1,7 @@
 package com.huawei.sampleappgallery.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,9 +24,10 @@ class RegisterViewModel(
     private var _isSuccessRegister = MutableLiveData<Boolean>()
     val isSuccessRegister: LiveData<Boolean> get() = _isSuccessRegister
 
-    fun register(email: String, password: String, verifyCode: String?) = viewModelScope.launch {
+    fun register(email: String, password: String, verifyCode: String){
+        Log.d("RegisterViewModel",email+" "+password+" "+verifyCode)
         if (Util.isHmsAvailable(getApplication())) {
-            hmsRegister(email, password, verifyCode!!)
+            hmsRegister(email, password, verifyCode)
         } else if (Util.isGmsAvailable(getApplication())) {
             gmsRegisterUser(email, password)
         }
@@ -33,18 +35,18 @@ class RegisterViewModel(
     }
 
     private fun gmsRegisterUser(eMail: String, password: String) {
-            gmsAuth.createUserWithEmailAndPassword(eMail.trim(), password)
-                .addOnSuccessListener { it ->
-                    _isSuccessRegister.value = true
-                    _message.value = it.user?.uid
-                }.addOnFailureListener { exception ->
-                    _isSuccessRegister.value = false
-                    _message.value = exception.localizedMessage
-                }
+        gmsAuth.createUserWithEmailAndPassword(eMail.trim(), password)
+            .addOnSuccessListener { it ->
+                _isSuccessRegister.value = true
+                _message.value = it.user?.uid
+            }.addOnFailureListener { exception ->
+                _isSuccessRegister.value = false
+                _message.value = exception.localizedMessage
+            }
 
-        }
+    }
 
-    private fun hmsRegister(email: String, password: String, verifyCode: String){
+    private fun hmsRegister(email: String, password: String, verifyCode: String) {
         hmsAuth.createUser(
             EmailUser.Builder().setEmail(email).setVerifyCode(verifyCode).setPassword(password)
                 .build()
