@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "6721798611",
+    "project_id": "huaweisample-af704",
+    "storage_bucket": "huaweisample-af704.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:6721798611:android:e3b00f3298e4b81e37af26",
+        "android_client_info": {
+          "package_name": "com.huawei.sampleappgallery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "6721798611-b3aiofp1esanu5pp9idcq66p3ji71rc8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKtFqRfRVgC88X1D4TY01CgaFbBrrteq4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "6721798611-b3aiofp1esanu5pp9idcq66p3ji71rc8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
